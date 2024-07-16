@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Multi-step Form with Branching</title>
+		<style>
+			/* Example styles for better form appearance */
+			body {
+				font-family: Arial, sans-serif;
+				line-height: 1.6;
+				padding: 20px;
+			}
+
+			.form-step {
+				margin-bottom: 20px;
+			}
+
+			button {
+				margin-top: 10px;
+			}
+
+			/* Additional styles as needed */
+		</style>
+		<!-- optional: for styling -->
+	</head>
+	<body>
+		<form id="multi-step-form">
+			<!-- Step 1: Initial question -->
+			<div class="form-step" id="step1">
+				<h2>Step 1: Choose an option</h2>
+				<label
+					><input type="radio" name="option" value="option1" /> Option 1</label
+				><br />
+				<label
+					><input type="radio" name="option" value="option2" /> Option 2</label
+				><br />
+				<label
+					><input type="radio" name="option" value="option3" /> Option 3</label
+				><br />
+				<button type="button" onclick="nextStep()">Next</button>
+			</div>
+
+			<!-- Step 2: Branch based on option selected -->
+			<div class="form-step" id="step2" style="display: none">
+				<h2>Step 2: Additional information</h2>
+				<!-- Option 1 specific questions -->
+				<div id="option1-questions" style="display: none">
+					<label
+						>Option 1 detail 1:
+						<input type="text" name="option1-detail1" /></label
+					><br />
+					<label
+						>Option 1 detail 2:
+						<input type="text" name="option1-detail2" /></label
+					><br />
+				</div>
+				<!-- Option 2 specific questions -->
+				<div id="option2-questions" style="display: none">
+					<label
+						>Option 2 detail: <input type="text" name="option2-detail" /></label
+					><br />
+				</div>
+				<!-- Option 3 specific questions -->
+				<div id="option3-questions" style="display: none">
+					<label
+						>Option 3 detail: <input type="text" name="option3-detail" /></label
+					><br />
+				</div>
+				<button type="button" onclick="previousStep()">Previous</button>
+				<button type="button" onclick="submitForm()">Submit</button>
+			</div>
+		</form>
+
+		<script>
+			// Function to show the next step based on selected radio button
+			function nextStep() {
+				var form = document.getElementById("multi-step-form");
+				var option = form.querySelector('input[name="option"]:checked').value;
+
+				// Hide current step and show next step based on selected option
+				document.getElementById("step1").style.display = "none";
+				document.getElementById("step2").style.display = "block";
+
+				// Show the appropriate set of questions based on the selected option
+				if (option === "option1") {
+					document.getElementById("option1-questions").style.display = "block";
+				} else if (option === "option2") {
+					document.getElementById("option2-questions").style.display = "block";
+				} else if (option === "option3") {
+					document.getElementById("option3-questions").style.display = "block";
+				}
+			}
+
+			// Function to go back to previous step
+			function previousStep() {
+				// Hide current step and show previous step
+				document.getElementById("step1").style.display = "block";
+				document.getElementById("step2").style.display = "none";
+
+				// Hide all question sets
+				document.getElementById("option1-questions").style.display = "none";
+				document.getElementById("option2-questions").style.display = "none";
+				document.getElementById("option3-questions").style.display = "none";
+			}
+
+			// Function to submit form (can be further customized)
+			function submitForm() {
+				// Gather all form data and submit/process as needed
+				var form = document.getElementById("multi-step-form");
+				var formData = new FormData(form);
+				// Example: Send formData via AJAX or process it in another way
+				console.log(formData);
+			}
+		</script>
+		<!-- JavaScript file for functionality -->
+	</body>
+</html>
